@@ -1,0 +1,24 @@
+
+# Ver interfaces de red
+ip a        # Muestra interfaces y sus nombres
+
+# Ver conexiones disponibles
+nmcli con show    # Lista conexiones de red
+
+# ---- Configuración con DHCP ----
+nmcli con mod "nombre_conexion" ipv4.method auto   # Poner en DHCP
+nmcli con up "nombre_conexion"                     # Aplicar cambios
+
+# ---- Configuración con IP estática ----
+nmcli con mod "nombre_conexion" ipv4.addresses 192.168.1.100/24   # Asignar IP y máscara
+nmcli con mod "nombre_conexion" ipv4.gateway 192.168.1.1          # Definir gateway
+nmcli con mod "nombre_conexion" ipv4.method manual                # Cambiar a manual
+nmcli con up "nombre_conexion"                                    # Aplicar cambios
+
+# ---- Configuración de DNS ----
+nmcli con mod "nombre_conexion" ipv4.dns "8.8.8.8 8.8.4.4"        # DNS Google
+nmcli con up "nombre_conexion"                                    # Aplicar cambios
+
+# ---- Verificación ----
+nmcli dev show     # Ver IP, gateway y DNS actuales
+ping -c 4 google.com   # Probar conectividad
