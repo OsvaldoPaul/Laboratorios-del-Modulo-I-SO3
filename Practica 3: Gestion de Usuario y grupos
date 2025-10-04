@@ -1,0 +1,29 @@
+
+# ---- Cambiar a superusuario ----
+sudo su                # Entrar como root
+
+# ---- Crear usuario con contraseña ----
+useradd Osvaldo -p 1234     # Crear usuario "Osvaldo" con contraseña 1234
+
+cd /home                    # Entrar al directorio home
+ls                          # Listar para verificar directorios de usuarios
+
+# ---- Verificar grupo sudoers ----
+sudo cat /etc/group | grep sudoers    # Buscar grupo sudoers (en Rocky se usa "wheel")
+
+# ---- Agregar usuario al grupo wheel (sudo) ----
+usermod Osvaldo -aG wheel   # Dar permisos sudo al usuario Osvaldo
+groups Osvaldo              # Ver grupos a los que pertenece
+
+# ---- Crear grupo y usuario ----
+groupadd guest              # Crear grupo llamado guest
+useradd paul -p 1234        # Crear usuario paul con contraseña 1234
+
+# ---- Agregar usuario al grupo creado ----
+usermod paul -aG guest      # Agregar paul al grupo guest
+sudo cat /etc/group | grep guest    # Verificar que el grupo guest existe y contiene a paul
+
+# ---- Eliminar usuario y grupo ----
+userdel -r paul             # Eliminar usuario paul y su directorio home
+groupdel guest              # Eliminar grupo guest
+sudo cat /etc/group | grep guest    # Verificar que el grupo guest fue eliminado
